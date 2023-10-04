@@ -117,7 +117,92 @@ shuffle <- function(cards) {
 shuffle <- function(cards) { 
   random <- sample(1:52, size = 52)
   cards[random, ]
+deal <- function(cards){ cards[1,]}
+deal(deck)
+deck2<- deck[1:52,]
+head(deck2)
+random <- sample(1:52, size=52)
+deck4<-deck[random,]
+shuffle <- function(cards) { 
+  random <- sample(1:52, size = 52)
+  cards[random, ]
 }
+shuffle(deck)
+deck2<-shuffle(deck)
+deal(deck2)
+#dollar signs to select values from data frame
+deck$value
+#will return all values as a vector, helpful to run functions
+mean(deck$value)
+#list() 
+lst <- list(numbers = c(1, 2), logical = TRUE, strings = c("a", "b", "c"))
+lst[2] : extract 1st list with one element w name
+lst[[1]]: extract 1st list with one element wo name
+significance: sum(lst[2]) sum(lst[[2]])
+lst$numbers
+list(deck$face)
+#single brackets to select train cars, double brackets to select the contents inside of a car
+
+Lesson 7: Modifying Values
+d3ck<-deck
+#modify value using <-
+vec <- c(0, 0, 0, 0, 0, 0)
+vec[1]<-1000
+#can replace multiple values at once
+vec[c(1, 3, 5)] <- c(1, 1, 1)
+?c()
+#add one to entrys 4-6
+vec[4:6] <- vec[4:6] + 1
+#add new column to dataframe:
+d3ck$new<-1:52
+head(d3ck)
+#remove columns:
+d3ck$new<-NULL
+#war
+d3ck[c(13, 26, 39, 52),3 ] and d3ck$value[c(13, 26, 39, 52), ] are the same
+d3ck[c(13, 26, 39, 52),3 ] <-14
+#use logical subsetting to extract aces
+< > <= >= == != %in%
+d3ck$face=="ace"
+sum(d3ck$face=="ace")
+d3ck$value[d3ck$face == "ace"] <- 14
+deck4<-deck
+deck4$value<-0
+deck4$value[deck4$suit=="hearts"]<-1
+deck4$value[deck4$face=="queen" &deck4$suit=="spades"]<-13
+#Boolean Operators
+& | xor() ! any() all()
+#need to put complete tests one either side of the boolean operators
+#When used with vectors, Boolean operators will follow the same element-wise execution as arithmetic and logical operators
+#practice w tests
+w <- c(-1, 0, 1)
+x <- c(5, 15)
+y <- "February"
+z <- c("Monday", "Tuesday", "Friday")
+#Is w positive?
+w>0
+#Is x greater than 10 and less than 20?
+x>10&x<20
+#Is object y the word February?
+y=="February"
+#Is every value in z a day of the week?
+all(z %in% c("Monday","Tuesday","Wednesday","Friday"))
+#blackjack
+deck5<-deck
+deck5$value[deck5$face=="king"|deck5$face=="queen"|deck5$face=="jack"]<-10
+#or
+facecard <- deck5$face %in% c("king", "queen", "jack")
+deck5$value[facecard] <- 10
+#missing information
+called NA
+#can't do simple calculations w all data is there is one NA value
+na.rm() : use to ignore NA values in data set
+is.na() : use to identify NA values bc logical tests w NA will just return NA
+#can set values as NA
+deck5$value[deck5$face == "ace"] <- NA
+
+
+
 
 Lesson 16 Writing Your Own Functions
 
