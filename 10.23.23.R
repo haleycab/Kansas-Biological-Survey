@@ -5,22 +5,23 @@ generatenewreport <- function(species, season, latitude, add_lines = FALSE) {
   # Filter the data for the specified species
   specdata <- data[data$spnm == species,]
   
-  # Filter data for the specified season (fall or spring)
+  # Filter data for the season (fall or spring)
   if (season == "fall") {
     specdata <- specdata[specdata$fall == 1,]
   } else if (season == "spring") {
     specdata <- specdata[specdata$fall == 0,]
-  } else {
-    stop("Invalid season. Please use 'fall' or 'spring'.")
-  }
+  } 
   
   # Create a column for rounded latitude 
   specdata$latr <- round(specdata$DECDEG_BEGLAT)
   
-  # Aggregate data and take the log of (1 + EXPCATCHWT)
+  # Create a column for the log of (1 + EXPCATCHWT)
   specdata$LogEXPCATCHWT <- log(1 + specdata$EXPCATCHWT)
+
+  # Aggregate data (target=log of biomass)
   speciesagg <- serialAgg(specdata, AggCats = c("GMT_YEAR", "latr"), AggTarg = "LogEXPCATCHWT")
-  
+
+  # Option to add line to existing plot
   if (!add_lines) {
     # If add_lines is FALSE, create a new plot
     plot(speciesagg[speciesagg[,2] == latitude, "GMT_YEAR"], speciesagg[speciesagg[,2] == latitude, "LogEXPCATCHWT"],
@@ -31,8 +32,8 @@ generatenewreport <- function(species, season, latitude, add_lines = FALSE) {
     lines(speciesagg[speciesagg[,2] == latitude, "GMT_YEAR"], speciesagg[speciesagg[,2] == latitude, "LogEXPCATCHWT"], col = "red", type = "l",lwd=2
           )
   }
-# Add dashed line at year 2007.5
-  abline(v=2007.5,col=4,lty=2)
+  # Add dashed line at year 2007.5
+    abline(v=2007.5,col=4,lty=2)
 }
 
 
