@@ -8,6 +8,7 @@ MyData=cbind(spp=alldat[,"SVSPP"], pop=round(alldat[,"DECDEG_BEGLAT"]),yr=alldat
 head(MyDataAgg)
 
 #FUNCTION
+#season="fall" "spring" or "both"
 #evrn="none","noZP",or "all"
 findR2values1=function(speciesnum,season,evrn,yearmin,yearmax,E){
   #choose to include ZP in environmental data columns or not
@@ -19,9 +20,8 @@ findR2values1=function(speciesnum,season,evrn,yearmin,yearmax,E){
  
   #take columns of only what we need & rename
   MyData=cbind(spp=alldat[,"SVSPP"], pop=round(alldat[,"DECDEG_BEGLAT"]),yr=alldat[,"GMT_YEAR"], n=alldat[,"EXPCATCHWT"],alldat[,c(EnvtDatColumns,"fall","logn")])
-  head(MyDataAgg)
-  #select for a certain season
-  
+ 
+   #select for a certain season
   if (season == "fall") {
     MyDataUse=MyData[MyData[,"fall"]==1,]
   } else if (season == "spring") {
@@ -31,6 +31,7 @@ findR2values1=function(speciesnum,season,evrn,yearmin,yearmax,E){
   } else {
     stop("use 'fall' 'spring'or 'both")
   }
+  
   #aggregate data by species, population, and year
   MyDataAgg=serialAgg(MyDataUse,AggCats=c("spp","pop","yr"))
   #AggCats are the columns that stay the same when aggregating
@@ -89,10 +90,28 @@ matrixR2myspec=function(season,evrn,yearmin,yearmax,E){
   #speciesR2values1[ ,7]==
   speciesR2values1
 }
-#EXAMPLE
-matrixR2myspec("fall","none",1977,2008,6)
+#EXAMPLE (season,evrn,yearmin,yearmax,E)
+matrixR2myspec("both","none",1977,2008,6)
 
-#write.csv(speciesR2values, "test.csv")
+# How important is environment
+allszn.noevrn.7708=matrixR2myspec("both","none",1977,2008,6)
+allszn.evrn.7708=matrixR2myspec("both","all",1977,2008,6)
+
+# Which season (w evrn)
+fall.evrn.7708=matrixR2myspec("fall","all",1977,2008,6)
+spring.evrn.7708=matrixR2myspec("spring","all",1977,2008,6)
+#allszn.evrn.7708=matrixR2myspec("all","all",1977,2008,6)
+
+# ZP or longer time series
+#allszn.evrn.7708=matrixR2myspec("fall","all",1977,2008,6)
+allszn.noZP.6308=matrixR2myspec("fall","noZP",1963,2008,6)
+allszn.noZP.7708=matrixR2myspec("fall","noZP",1977,2008,6)
+
+
+write.csv(allszn.noZP.7708, "allszn.noZP.7708.csv")
+?file.path
+getwd()
+
 
 #write code to create column for best E in matrix
 #name matrix generated for each spreadsheet item
