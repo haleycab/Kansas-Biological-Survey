@@ -5,23 +5,22 @@ generatenewreport <- function(species, season, latitude, add_lines = FALSE) {
   # Filter the data for the specified species
   specdata <- data[data$spnm == species,]
   
-  # Filter data for the season (fall or spring)
+  # Filter data for the specified season (fall or spring)
   if (season == "fall") {
     specdata <- specdata[specdata$fall == 1,]
   } else if (season == "spring") {
     specdata <- specdata[specdata$fall == 0,]
-  } 
+  } else {
+    stop("use 'fall' or 'spring'")
+  }
   
   # Create a column for rounded latitude 
   specdata$latr <- round(specdata$DECDEG_BEGLAT)
   
-  # Create a column for the log of (1 + EXPCATCHWT)
+  # Aggregate data and take the log of (1 + EXPCATCHWT)
   specdata$LogEXPCATCHWT <- log(1 + specdata$EXPCATCHWT)
-
-  # Aggregate data (target=log of biomass)
   speciesagg <- serialAgg(specdata, AggCats = c("GMT_YEAR", "latr"), AggTarg = "LogEXPCATCHWT")
-
-  # Option to add line to existing plot
+  
   if (!add_lines) {
     # If add_lines is FALSE, create a new plot
     plot(speciesagg[speciesagg[,2] == latitude, "GMT_YEAR"], speciesagg[speciesagg[,2] == latitude, "LogEXPCATCHWT"],
@@ -33,11 +32,20 @@ generatenewreport <- function(species, season, latitude, add_lines = FALSE) {
           )
   }
   # Add dashed line at year 2007.5
-    abline(v=2007.5,col=4,lty=2)
+  abline(v=2007.5,col=4,lty=2)
 }
 
 
-generatenewreport("BLUEFISH", "fall", 44, add_lines = FALSE)  # Create a new plot
-generatenewreport("BLUEFISH", "spring", 44, add_lines = TRUE)   # Add lines to an existing plot
+generatenewreport("BLUEFISH", "fall", 40, add_lines = FALSE)  # Create a new plot
+generatenewreport("BLUEFISH", "spring", 40, add_lines = TRUE)   # Add lines to an existing plot
+
+# For Loop function
+generatelatrgraphs <- function(species, latrmin,latrmax) {
+for(i in latrmin:latrmax)
+# lat in 36:45
+print(generatenewreport(species, "fall", i, add_lines = FALSE) ,generatenewreport(species, "spring", i, add_lines = TRUE))
+}
+
+generatelatrgraphs("SUMMER FLOUNDER", 36,44)
 
 
