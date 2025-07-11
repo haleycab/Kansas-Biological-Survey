@@ -1,8 +1,4 @@
-Absolutely! Here's a clean, ready-to-paste **README.md** section you can drop directly into your repository:
 
----
-
-````markdown
 # 🐟 Climate-Induced Shifts in Fish Population Dynamics Using EDM
 
 This project explores how climate variability—specifically the **North Atlantic Oscillation (NAO)**—influences fish population dynamics in the **Northeast Atlantic**. We apply **Empirical Dynamical Modeling (EDM)** and **Gaussian Process EDM (GPEDM)** to investigate nonlinear, causal relationships between climate and marine ecosystems.
