@@ -1,40 +1,38 @@
-# 🐟 Climate-Driven Shifts in Fish Population Dynamics Using EDM
+# 🐟 Climate-Induced Shifts in Fish Population Dynamics Using EDM
 
-This project investigates how climate variability—specifically the North Atlantic Oscillation (NAO)—shapes fish population dynamics in the Northeast Atlantic. Using **Empirical Dynamical Modeling (EDM)** and its probabilistic extension, **Gaussian Process EDM (GPEDM)**, we explore nonlinear and potentially causal links between climate and marine ecosystems.
+This project investigates how climate variability—specifically the North Atlantic Oscillation (NAO)—influences fish population dynamics in the Northeast Atlantic. We apply two modeling approaches: **Empirical Dynamical Modeling (EDM)** and its probabilistic extension, **Gaussian Process EDM (GPEDM)**, to explore nonlinear relationships between climate drivers and marine species abundance.
 
 ## 🌍 Background
 
-Marine ecosystems are highly sensitive to changing ocean conditions, many of which are influenced by large-scale climate patterns like the NAO. While the NAO is known to affect sea surface temperature and ocean circulation, its impact on individual fish species is less well characterized. This project addresses that gap by:
+Ecological systems are influenced by many interacting variables, many of which are unmeasured or unknown. In marine environments, species distributions and population trends often reflect large-scale climate variability. The NAO, which alters sea surface temperatures, wind, and ocean mixing, plays a central role in shaping the North Atlantic marine ecosystem. However, its specific impact on fish populations remains difficult to quantify.
 
-- Assessing the NAO’s role as a **causal driver** of population dynamics
-- Simulating potential future population trends under different climate regimes
-- Contributing data-driven tools to support ecosystem-based fisheries management
+This study focuses on understanding how the NAO affects fish abundance at the species level. The objective is to assess whether the NAO acts as a causal driver of population dynamics and to evaluate how species respond to different climate scenarios.
 
 ## 📊 Methods
 
-We use two complementary modeling approaches that don’t require explicit mechanistic equations:
+We use two complementary, nonlinear time series approaches:
 
-- **Empirical Dynamical Modeling (EDM):** A model-free framework that uses delay-coordinate embedding to forecast and infer causality
-- **Gaussian Process EDM (GPEDM):** A flexible, probabilistic variant of EDM that quantifies uncertainty in forecasts and relationships
+- **Empirical Dynamical Modeling (EDM):** A model-free forecasting method that reconstructs system dynamics using time-lagged observations
+- **Gaussian Process EDM (GPEDM):** A probabilistic version of EDM that models nonlinear dynamics as distributions over functions, allowing for uncertainty quantification
 
-Both methods allow us to study complex systems using only observed time series data—no assumptions about the underlying equations are needed.
+These approaches allow us to examine complex, state-dependent dynamics without needing to specify a mechanistic model of the system.
 
 ## 🔁 Why Delay Embedding Works: Takens' Theorem
 
-In ecological systems, many important variables—like prey availability, competition, or temperature—are often unmeasured. Takens' Theorem offers a way forward: under certain conditions, the dynamics of a system can be reconstructed using time-lagged values of just one observed variable.
+Ecological time series often lack complete information on all relevant drivers. For instance, while we may have data on the population size of a fish species, we may not have observations of its prey, competitors, or environmental conditions. Despite this, it is possible to model the system's dynamics.
 
-
-This approach captures hidden ecological influences indirectly through their effect on the target species. In practice, we reconstruct the system’s “attractor” and use it for forecasting and inference. This is the foundation of both EDM and GPEDM.
+**Takens’ Theorem** provides the theoretical foundation for this approach. It states that, under certain assumptions, the dynamics of a system can be reconstructed using only time-lagged values of a single observed variable. This means that by using lagged observations of species abundance, we can implicitly account for the effects of hidden or unmeasured variables. This principle is the foundation of both EDM and GPEDM.
 
 ## 🐠 Data
 
-- **Fish abundance:** Spring bottom trawl surveys from NOAA’s Northeast Fisheries Science Center (1968–2008)
+- **Fish abundance:** Spring bottom trawl survey data from NOAA’s Northeast Fisheries Science Center (1968–2008)
 - **Climate index:** Hurrell’s North Atlantic Oscillation (NAO) index
-- **Focal species:** Cod, Herring, Mackerel, and others with sufficient long-term records
+- **Species examined:** Atlantic cod, herring, mackerel, and other species with sufficiently long time series
 
-## 🔬 Key Findings
+## 🔬 Results Summary
 
-- GPEDM models that include NAO consistently outperform those without climate input
-- High φ-values suggest the NAO plays a causal role in the population dynamics of multiple species
-- Species show distinct responses to NAO variability, highlighting the importance of species-specific modeling in fisheries science
+- GPEDM models that include the NAO as an input show improved predictive performance compared to models without climate variables
+- Strong causal signals (high φ-values) suggest that the NAO influences population dynamics in several species
+- Simulations highlight species-specific responses to NAO variability, suggesting different ecological mechanisms across trophic levels
 
+These findings demonstrate that EDM-based approaches can be effective in identifying climate-driven dynamics in ecological systems, even when many key processes remain unmeasured.
